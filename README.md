@@ -15,7 +15,24 @@ Add a mariadb database.
 
 Make all three work with docker compose
 
-I have to setup a second container with wordpress and php.
+I have to setup a second container with wordpress and php. Wordpress contents goes in a volume on the host machine. PHP is installed in the container.
+
+I want to create a volume where my website hosted by my nginx server is stored. Without yet thinking about making another container with php and wordpress.
+
+How do I get the files from my host machine to the volume?
+$: docker volume create webdata
+$: docker run -d -v webdata:/var/www/html -p 8080:80 --name nginx-vol my-nginx
+then copy files to /var/www/html and it is saved to the volume
+
+23/01/2026
+Get nginx and wordpress containers working together over a network.
+How does nginx get php requests to the php server?
+How do I set the php server to listen to port 9000?
+How do you set up a docker network?
+How do you assign a network to a docker container?
+
+24/01/2026
+Edit the php config file
 
 References:
 https://docker-curriculum.com/
