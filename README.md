@@ -28,11 +28,20 @@ then copy files to /var/www/html and it is saved to the volume
 Get nginx and wordpress containers working together over a network.
 How does nginx get php requests to the php server?
 How do I set the php server to listen to port 9000?
+listen = /run/php/php8.2-fpm.sock	====> listen = 0.0.0.0:9000 in /etc/php/8.2/fpm/pool.d/www.conf
 How do you set up a docker network?
+docker create network <network name>
 How do you assign a network to a docker container?
+when creating a container add: --network <network name>
 
 24/01/2026
-Edit the php config file
+Edit the php config file:
+listen = /run/php/php8.2-fpm.sock	====> listen = 0.0.0.0:9000
+docker create network webnet
+docker run -d -v webdata:/var/www/html --name wordpress --network webnet wordpress
+docker run -d -v webdata:/var/www/html --name nginx --network webnet -p 8080:80 nginx
+
+Get wordpress content in there.
 
 References:
 https://docker-curriculum.com/
