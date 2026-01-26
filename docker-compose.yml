@@ -1,0 +1,19 @@
+services:
+  nginx:
+    build: ./nginx
+    ports: 
+      - "8080:80"
+    networks: 
+      - webnet
+    volumes:
+      - webdata:/var/www/html
+  wordpress:
+    build: ./wordpress
+    networks: 
+      - webnet
+    volumes:
+      - webdata:/var/www/html
+networks:
+  webnet:
+volumes:
+  webdata:

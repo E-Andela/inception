@@ -43,6 +43,11 @@ docker run -d -v webdata:/var/www/html --name nginx --network webnet -p 8080:80 
 
 Get wordpress content in there.
 
+26/01/2026
+create compose file
+set up database.
+How do I properly configure mariadb?
+
 References:
 https://docker-curriculum.com/
 https://docs.docker.com/
