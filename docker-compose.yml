@@ -13,7 +13,14 @@ services:
       - webnet
     volumes:
       - webdata:/var/www/html
+#   mariadb:
+#     build: ./mariadb
+#     networks:
+#       - webnet
+#     volumes:
+#       - dbdata:/var/lib/mysql
 networks:
   webnet:
 volumes:
   webdata:
+  dbdata:

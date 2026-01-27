@@ -48,6 +48,10 @@ create compose file
 set up database.
 How do I properly configure mariadb?
 
+27/01/2026
+ $ docker run -it --network webnet --name mariadb -v my_git_dbdata mariadb bash
+service mariadb start
+
 References:
 https://docker-curriculum.com/
 https://docs.docker.com/
