@@ -1,6 +1,9 @@
 services:
   nginx:
+    container_name: nginx
     build: ./nginx
+    image: nginx:local
+    pull_policy: never
     ports: 
       - "8080:80"
     networks: 
@@ -8,19 +11,28 @@ services:
     volumes:
       - webdata:/var/www/html
   wordpress:
+    container_name: wordpress
     build: ./wordpress
+    image: wordpress:local
+    pull_policy: never
     networks: 
       - webnet
     volumes:
       - webdata:/var/www/html
-#   mariadb:
-#     build: ./mariadb
-#     networks:
-#       - webnet
-#     volumes:
-#       - dbdata:/var/lib/mysql
+  # mariadb:
+  #   container_name: mariadb
+  #   build: ./mariadb
+  #   image: mariadb:local
+  #   pull_policy: never
+  #   networks:
+  #     - webnet
+  #   volumes:
+  #     - dbdata:/var/lib/mysql
 networks:
   webnet:
+    name: webnet
 volumes:
   webdata:
+    name: webdata
   dbdata:
+    name: dbdata

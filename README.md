@@ -52,6 +52,10 @@ How do I properly configure mariadb?
  $ docker run -it --network webnet --name mariadb -v my_git_dbdata mariadb bash
 service mariadb start
 
+29/01/2026
+to run mariadb we do:
+docker run -it --network webnet --name mariadb -v dbdata mariadb bash
+
 References:
 https://docker-curriculum.com/
 https://docs.docker.com/
