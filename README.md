@@ -58,6 +58,11 @@ docker run -it --network webnet --name mariadb -v dbdata mariadb bash
 
 30/01/2026
 added setup.sh to wordpress. Gives ownership to www-data of /var/www/html so we can make wp-config.php
+How do we login via a script?
+And what is this second user?
+What is the admin account and what privileges does the other account need?
+curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
 
 References:
 https://docker-curriculum.com/
