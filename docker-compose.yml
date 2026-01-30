@@ -19,15 +19,15 @@ services:
       - webnet
     volumes:
       - webdata:/var/www/html
-  # mariadb:
-  #   container_name: mariadb
-  #   build: ./mariadb
-  #   image: mariadb:local
-  #   pull_policy: never
-  #   networks:
-  #     - webnet
-  #   volumes:
-  #     - dbdata:/var/lib/mysql
+  mariadb:
+    container_name: mariadb
+    build: ./mariadb
+    image: mariadb:local
+    pull_policy: never
+    networks:
+      - webnet
+    volumes:
+      - dbdata:/var/lib/mysql
 networks:
   webnet:
     name: webnet

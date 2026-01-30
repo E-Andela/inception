@@ -56,6 +56,9 @@ service mariadb start
 to run mariadb we do:
 docker run -it --network webnet --name mariadb -v dbdata mariadb bash
 
+30/01/2026
+added setup.sh to wordpress. Gives ownership to www-data of /var/www/html so we can make wp-config.php
+
 References:
 https://docker-curriculum.com/
 https://docs.docker.com/

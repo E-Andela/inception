@@ -16,9 +16,9 @@ RUN apt-get update && \
 
 RUN sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/8.2/fpm/pool.d/www.conf
 RUN mkdir -p /var/www/html
-RUN chown -R www-data:www-data /var/www/html
-RUN chmod -R 755 /var/www/html
 
 WORKDIR /var/www/html
+COPY ./setup.sh /tmp/setup.sh
+RUN chmod +x /tmp/setup.sh
 
-CMD ["php-fpm8.2", "-F"]
+ENTRYPOINT [ "/tmp/setup.sh" ]
