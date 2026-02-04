@@ -4,17 +4,23 @@ services:
     build: ./nginx
     image: nginx:local
     pull_policy: never
+    env_file:
+      - .env
     ports: 
-      - "8080:80"
+      - "8443:443"
     networks: 
       - webnet
     volumes:
       - webdata:/var/www/html
+    depends_on:
+      - wordpress
   wordpress:
     container_name: wordpress
     build: ./wordpress
     image: wordpress:local
     pull_policy: never
+    env_file:
+      - .env
     networks: 
       - webnet
     volumes:

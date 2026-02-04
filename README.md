@@ -63,6 +63,31 @@ And what is this second user?
 What is the admin account and what privileges does the other account need?
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
+02/02/2026
+figure out the steps to install wp-cli
+curl the url -> give execution rights -> move somewhere accesible for $PATH -> download wp files with: wp core download. Don't do this in the dockerfile but in the entrypoint script. Otherwise the volume will overwrite it.
+
+How to get env variables in my container? put env_file: in container.
+For tomorrow:
+Fix connection issue? Just changed nginx.conf
+
+03/02/2026
+Add ssl certificates??
+Put passwords in secrets.
+How to change the domain name?
+Why do we get to store the passwords in .txt files??
+How do I get my containers to restart in case of crash?
+
+How to add ssl certificate:
+add "listen 8443 ssl;" directive to config file.
+add "ssl_certificate ...;" & "ssl_certificate_key ...;" locations
+add "ssl_protocols TLSv1.3;"
+continue with this tomorrow
+
+04/02/2026
+Install openssl
+figure out how to do the url. Need to edit /etc/hosts
+
 
 References:
 https://docker-curriculum.com/
