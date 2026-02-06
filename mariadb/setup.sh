@@ -8,10 +8,12 @@ while ! mysqladmin ping -hlocalhost -uroot &> /dev/null; do
   sleep 1
 done
 
+$DB_PASSWORD=$(cat /run/secrets/db_password)
+
 # Create database and user
-mysql -e "CREATE DATABASE IF NOT EXISTS wordpress;"
-mysql -e "CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'wppass';"
-mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';"
+mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
+mysql -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
+mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';"
 mysql -e "FLUSH PRIVILEGES;"
 
 # Update bind address to allow connections from other containers

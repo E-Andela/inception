@@ -4,6 +4,7 @@ services:
     build: ./nginx
     image: nginx:local
     pull_policy: never
+    restart: unless-stopped
     env_file:
       - .env
     ports: 
@@ -19,6 +20,11 @@ services:
     build: ./wordpress
     image: wordpress:local
     pull_policy: never
+    restart: unless-stopped
+    secrets:
+      - wp_admin_password
+      - wp_user_password
+      - db_password
     env_file:
       - .env
     networks: 
@@ -30,6 +36,11 @@ services:
     build: ./mariadb
     image: mariadb:local
     pull_policy: never
+    restart: unless-stopped
+    secrets:
+      - db_password
+    env_file:
+      - .env
     networks:
       - webnet
     volumes:
@@ -42,3 +53,10 @@ volumes:
     name: webdata
   dbdata:
     name: dbdata
+secrets:
+  db_password:
+    file: ./.secrets/db_password.txt
+  wp_admin_password:
+    file: ./.secrets/wp_admin_password.txt
+  wp_user_password:
+    file: ./.secrets/wp_user_password.txt

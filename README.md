@@ -87,6 +87,10 @@ continue with this tomorrow
 04/02/2026
 Install openssl
 figure out how to do the url. Need to edit /etc/hosts
+Add passwords to secrets.
+
+Get containers to restart in case of crash. Got iiiiiiit.
+for tomorrow: add secrets to script.
 
 
 References:
