@@ -11,6 +11,6 @@ RUN chmod +x /tmp/setup.sh
 
 # COPY html /var/www/html
 
-EXPOSE 443
+EXPOSE 80
 
 ENTRYPOINT [ "/tmp/setup.sh" ]

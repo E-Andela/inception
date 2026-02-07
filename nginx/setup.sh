@@ -9,7 +9,7 @@ if [ ! -f /etc/nginx/ssl/nginx.crt ]; then
 	-newkey rsa:2048 \
 	-keyout /etc/nginx/ssl/nginx.key \
 	-out /etc/nginx/ssl/nginx.crt \
-	-subj "/C=NL/ST=Noord-Holland/L=Amsterdam/O=Codam Coding College/CN=eandela.42.fr"
+	-subj "/C=NL/ST=Noord-Holland/L=Amsterdam/O=Codam Coding College/CN=localhost"
 fi
 
 exec nginx -g "daemon off;"

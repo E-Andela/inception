@@ -92,6 +92,19 @@ Add passwords to secrets.
 Get containers to restart in case of crash. Got iiiiiiit.
 for tomorrow: add secrets to script.
 
+To change between localhost and eandela.42.fr
+nginx.conf
+listen 80; --> listen 433 ssl;
+server_name eandela.42.fr;
+ssl_certificate     /etc/nginx/ssl/nginx.crt;
+ssl_certificate_key /etc/nginx/ssl/nginx.key;
+ssl_protocols       TLSv1.2 TLSv1.3;
+
+wordpress/setup.sh
+--url="http://localhost:8080" --> --url="https://eandela.42.fr"
+
+docker-compose.yml
+ports: "8080:80" --> "443:443"
 
 References:
 https://docker-curriculum.com/
