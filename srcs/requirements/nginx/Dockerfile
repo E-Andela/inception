@@ -9,8 +9,6 @@ COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./tools/setup.sh /tmp/setup.sh
 RUN chmod +x /tmp/setup.sh
 
-# COPY html /var/www/html
-
-EXPOSE 80
+EXPOSE 443
 
 ENTRYPOINT [ "/tmp/setup.sh" ]
