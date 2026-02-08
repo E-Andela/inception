@@ -9,6 +9,10 @@ while ! mysqladmin ping -hlocalhost -uroot &> /dev/null; do
 done
 
 DB_PASSWORD=$(cat /run/secrets/db_password)
+DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
+
+# Set root password
+mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD';"
 
 # Create database and user
 mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"

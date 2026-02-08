@@ -2,7 +2,7 @@
 
 # Variables
 COMPOSE_FILE := srcs/docker-compose.yml
-COMPOSE_CMD := docker-compose -f $(COMPOSE_FILE)
+COMPOSE_CMD := docker compose -f $(COMPOSE_FILE)
 
 # Default target
 help:

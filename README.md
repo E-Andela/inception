@@ -120,8 +120,9 @@ remove secrets from logs		[x]
 get domain name from env		[x]
 fix expose mismatch				[x]
 create documentation			[]
-add makefile					[]
+add makefile					[x]
 What the hell is dockerignore?	[x]
+Fix mariadb login password.		[x]
 
 
 References:
