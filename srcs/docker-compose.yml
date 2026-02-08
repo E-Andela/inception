@@ -15,6 +15,7 @@ services:
       - webdata:/var/www/html
     depends_on:
       - wordpress
+  
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
@@ -31,6 +32,9 @@ services:
       - webnet
     volumes:
       - webdata:/var/www/html
+    depends_on:
+      - mariadb
+  
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
@@ -45,14 +49,17 @@ services:
       - webnet
     volumes:
       - dbdata:/var/lib/mysql
+
 networks:
   webnet:
     name: webnet
+
 volumes:
   webdata:
     name: webdata
   dbdata:
     name: dbdata
+
 secrets:
   db_password:
     file: ../.secrets/db_password.txt
