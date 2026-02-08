@@ -5,8 +5,8 @@ RUN apt-get update && \
 	nginx \
 	openssl
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY ./setup.sh /tmp/setup.sh
+COPY ./conf/nginx.conf /etc/nginx/nginx.conf
+COPY ./tools/setup.sh /tmp/setup.sh
 RUN chmod +x /tmp/setup.sh
 
 # COPY html /var/www/html

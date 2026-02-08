@@ -1,7 +1,7 @@
 services:
   nginx:
     container_name: nginx
-    build: ./nginx
+    build: ./requirements/nginx
     image: nginx:local
     pull_policy: never
     restart: unless-stopped
@@ -17,7 +17,7 @@ services:
       - wordpress
   wordpress:
     container_name: wordpress
-    build: ./wordpress
+    build: ./requirements/wordpress
     image: wordpress:local
     pull_policy: never
     restart: unless-stopped
@@ -33,7 +33,7 @@ services:
       - webdata:/var/www/html
   mariadb:
     container_name: mariadb
-    build: ./mariadb
+    build: ./requirements/mariadb
     image: mariadb:local
     pull_policy: never
     restart: unless-stopped
@@ -55,8 +55,8 @@ volumes:
     name: dbdata
 secrets:
   db_password:
-    file: ./.secrets/db_password.txt
+    file: ../.secrets/db_password.txt
   wp_admin_password:
-    file: ./.secrets/wp_admin_password.txt
+    file: ../.secrets/wp_admin_password.txt
   wp_user_password:
-    file: ./.secrets/wp_user_password.txt
+    file: ../.secrets/wp_user_password.txt

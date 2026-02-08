@@ -3,6 +3,6 @@ FROM debian:bookworm
 RUN apt-get update && \
 	apt-get install -y mariadb-server
 
-COPY ./setup.sh /tmp/setup.sh
+COPY ./tools/setup.sh /tmp/setup.sh
 
 ENTRYPOINT ["bash", "/tmp/setup.sh"]

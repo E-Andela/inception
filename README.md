@@ -106,6 +106,24 @@ wordpress/setup.sh
 docker-compose.yml
 ports: "8080:80" --> "443:443"
 
+Changed the place the volumes are at, but not quite sure if it is the right way to go about it.
+I created /etc/docker/daemon.json
+{
+  "data-root": "/home/eandela/data"
+}
+
+08/02/2026
+fix folder structure
+Image names -- remove :local
+use bookworm or oldstable?
+remove secrets from logs
+get domain name from env
+fix expose mismatch
+create documentation
+add makefile
+What the hell is dockerignore?
+
+
 References:
 https://docker-curriculum.com/
 https://docs.docker.com/
