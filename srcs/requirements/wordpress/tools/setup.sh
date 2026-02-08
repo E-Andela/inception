@@ -31,7 +31,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 	--allow-root
 
 	wp core install \
-	--url="https://eandela.42.fr" \
+	--url="https://$DOMAIN_NAME" \
 	--title="Inception WordPress" \
 	--admin_user="$WP_ADMIN_USER" \
 	--admin_password="$WP_ADMIN_PASSWORD" \
