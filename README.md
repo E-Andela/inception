@@ -115,13 +115,13 @@ I created /etc/docker/daemon.json
 08/02/2026
 fix folder structure			[x]
 Image names -- remove :local	[x]
-use bookworm or oldstable?		[]
+use bookworm or oldstable?		[x]
 remove secrets from logs		[x]
-get domain name from env		[]
+get domain name from env		[x]
 fix expose mismatch				[x]
 create documentation			[]
 add makefile					[]
-What the hell is dockerignore?	[]
+What the hell is dockerignore?	[x]
 
 
 References:
