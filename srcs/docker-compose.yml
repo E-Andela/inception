@@ -2,7 +2,7 @@ services:
   nginx:
     container_name: nginx
     build: ./requirements/nginx
-    image: nginx:local
+    image: nginx
     pull_policy: never
     restart: unless-stopped
     env_file:
@@ -19,7 +19,7 @@ services:
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
-    image: wordpress:local
+    image: wordpress
     pull_policy: never
     restart: unless-stopped
     secrets:
@@ -38,7 +38,7 @@ services:
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
-    image: mariadb:local
+    image: mariadb
     pull_policy: never
     restart: unless-stopped
     secrets:
