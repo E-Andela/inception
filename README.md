@@ -123,6 +123,12 @@ create documentation			[]
 add makefile					[x]
 What the hell is dockerignore?	[x]
 Fix mariadb login password.		[x]
+rm daemon.json					[]
+fix setup.sh mariadb			[]
+
+for tomorrow
+setup.sh can't run a second time because im not login in with root
+
 
 
 References:
