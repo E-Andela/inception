@@ -9,7 +9,6 @@ while ! mysqladmin ping -hlocalhost -uroot &> /dev/null; do
 done
 
 DB_PASSWORD=$(cat /run/secrets/db_password)
-echo $DB_PASSWORD
 
 # Create database and user
 mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"

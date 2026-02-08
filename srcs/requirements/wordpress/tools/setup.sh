@@ -21,10 +21,6 @@ DB_PASSWORD=$(cat /run/secrets/db_password)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/wp_admin_password)
 WP_USER_PASSWORD=$(cat /run/secrets/wp_user_password)
 
-echo $DB_PASSWORD
-echo $WP_ADMIN_PASSWORD
-echo $WP_USER_PASSWORD
-
 if [ ! -f /var/www/html/wp-config.php ]; then
 	wp core download --locale=en_US --allow-root
 	wp config create \
