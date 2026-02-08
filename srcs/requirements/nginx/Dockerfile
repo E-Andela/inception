@@ -3,7 +3,8 @@ FROM debian:bookworm
 RUN apt-get update && \
 	apt-get install -y \
 	nginx \
-	openssl
+	openssl \
+	gettext
 
 COPY ./conf/nginx.conf.template /etc/nginx/nginx.conf.template
 COPY ./tools/setup.sh /tmp/setup.sh
