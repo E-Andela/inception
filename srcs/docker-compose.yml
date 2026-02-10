@@ -58,16 +58,8 @@ networks:
 volumes:
   webdata:
     name: webdata
-    driver_opts:
-      type: none
-      device: /home/eandela/data/webdata
-      o: bind
   dbdata:
     name: dbdata
-    driver_opts:
-      type: none
-      device: /home/eandela/data/dbdata
-      o: bind
 
 secrets:
   db_password:
