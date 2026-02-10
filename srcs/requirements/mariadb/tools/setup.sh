@@ -10,6 +10,7 @@ done
 
 DB_PASSWORD=$(cat /run/secrets/db_password)
 DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
+MARIADB_PORT=${MARIADB_PORT:-3306}
 
 # Check if database is already initialized
 if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
@@ -24,8 +25,9 @@ if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
   mysql -uroot -p${DB_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
 fi
 
-# Update bind address to allow connections from other containers
+# Update bind address and port to allow connections from other containers
 sed -i 's/^bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
+sed -i "s/^port.*/port = ${MARIADB_PORT}/" /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Stop the temporary service using mysqladmin with credentials
 mysqladmin -uroot -p${DB_ROOT_PASSWORD} shutdown

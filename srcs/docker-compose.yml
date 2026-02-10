@@ -8,7 +8,7 @@ services:
     env_file:
       - .env
     ports: 
-      - "443:443"
+      - "443:${NGINX_PORT}"
     networks: 
       - webnet
     volumes:
