@@ -9,21 +9,25 @@ while ! mysqladmin ping -hlocalhost -uroot &> /dev/null; do
 done
 
 DB_PASSWORD=$(cat /run/secrets/db_password)
-# DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
+DB_ROOT_PASSWORD=$(cat /run/secrets/db_root_password)
 
-# # Set root password
-# mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$DB_ROOT_PASSWORD';"
-
-# Create database and user
-mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
-mysql -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
-mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';"
-mysql -e "FLUSH PRIVILEGES;"
+# Check if database is already initialized
+if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
+  # Fresh install - root has no password yet
+  mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';"
+  mysql -uroot -e "FLUSH PRIVILEGES;"
+  
+  # Create database and user
+  mysql -uroot -p${DB_ROOT_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
+  mysql -uroot -p${DB_ROOT_PASSWORD} -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD';"
+  mysql -uroot -p${DB_ROOT_PASSWORD} -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USER'@'%';"
+  mysql -uroot -p${DB_ROOT_PASSWORD} -e "FLUSH PRIVILEGES;"
+fi
 
 # Update bind address to allow connections from other containers
 sed -i 's/^bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
 
-# Stop the temporary service and run mysqld as the foreground process
-service mariadb stop
+# Stop the temporary service using mysqladmin with credentials
+mysqladmin -uroot -p${DB_ROOT_PASSWORD} shutdown
 
 exec mysqld --user=mysql
