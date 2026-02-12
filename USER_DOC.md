@@ -11,8 +11,7 @@ From the project root:
 - Start: `make up`
 - Stop (without removal): `make stop`
 - Remove containers: `make down`
-- View status: `make ps`
-- View logs: `make logs ARGS='-f <service>'`
+- View logs: `make logs-follow`
 
 ## Access the website and admin panel
 1) Point your domain to your local IP by editing `/etc/hosts`:
@@ -31,10 +30,11 @@ Credentials are stored as Docker secrets in `../.secrets` and mounted at runtime
 Non-sensitive configuration is stored in [srcs/.env](srcs/.env) (see DEV_DOC.md for a template).
 
 ## Check services are running
-- `make ps` to list container status.
-- `make logs ARGS='-f nginx'` to confirm TLS is active.
-- `make logs ARGS='-f wordpress'` to confirm WordPress setup completed.
-- `make logs ARGS='-f mariadb'` to confirm DB is ready.
+- `make logs-follow` to view real-time logs for all services.
+- Check the logs to confirm:
+  - NGINX: TLS is active
+  - WordPress: setup completed
+  - MariaDB: DB is ready
 
 ## Common notes
 - NGINX serves `/var/www/html` from the `webdata` volume.

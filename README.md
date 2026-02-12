@@ -18,7 +18,7 @@ This project builds a small infrastructure using Docker Compose with three custo
 - **Volumes**: `webdata` for WordPress files, `dbdata` for MariaDB data.
 
 ## Design Choices & Sources
-- **Debian oldstable** is used as the base image to comply with the “penultimate stable” requirement.
+- **Debian oldstable** is used as the base image to comply with the "penultimate stable" requirement. I would have preferred using the explicit version name `bookworm`, but it's unclear whether that satisfies the subject's wording, so `oldstable` is used to be safe.
 - **TLS-only NGINX** is the single entrypoint on port 443; a self-signed certificate is generated during container startup.
 - **WP-CLI** installs and configures WordPress at runtime to avoid volume overwrite issues.
 - **Secrets** are stored in .secrets and mounted into containers to prevent credentials from living in images or source.
@@ -42,15 +42,15 @@ This project builds a small infrastructure using Docker Compose with three custo
 
 ## Instructions
 ### 1) Configure environment
-Create your `.env` in [srcs/.env](srcs/.env) and place secrets in `../.secrets` (see DEV_DOC.md for full details).
+Create your `.env` in [srcs/.env](srcs/.env) and place secrets in [/.secrets](/.secrets) (see DEV_DOC.md for full details).
 
 ### 2) Build and run
 - Build: `make build`
 - Start: `make up`
-- Status: `make ps`
-- Logs: `make logs ARGS='-f <service>'`
+- Logs: `make logs-follow`
 - Stop: `make stop`
 - Remove: `make down`
+- Clean (remove volumes): `make clean`
 
 ### 3) Access
 - Website: `https://<login>.42.fr` (update `/etc/hosts` to map your domain to your local IP)

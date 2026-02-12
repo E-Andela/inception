@@ -16,9 +16,6 @@
 ### Environment variables
 Create [srcs/.env](srcs/.env) with at least:
 - `DOMAIN_NAME=<login>.42.fr`
-- `NGINX_PORT=443`
-- `WP_PORT=9000`
-- `MARIADB_PORT=3306`
 - `DB_NAME=wordpress`
 - `DB_USER=<user>`
 - `DB_HOST=mariadb`
@@ -28,7 +25,7 @@ Create [srcs/.env](srcs/.env) with at least:
 - `WP_USER_EMAIL=<email>`
 
 ### Secrets
-Create these files in `../.secrets` (ignored by git):
+Create these files in `.secrets` in the root of the folder:
 - `db_password.txt`
 - `db_root_password.txt`
 - `wp_admin_password.txt`
@@ -41,11 +38,13 @@ Create these files in `../.secrets` (ignored by git):
 
 ## Manage containers & volumes
 - Stop/start: `make stop` / `make start`
-- Logs: `make logs ARGS='-f <service>'`
-- Shell into service: `make shell SERVICE=<service>`
-- Execute command: `make exec SERVICE=<service> CMD='command'`
+- Restart: `make restart`
+- Logs: `make logs-follow`
+- Remove containers: `make down`
 - Remove containers and volumes: `make clean`
-- Show compose status: `make status`
+- Prune dangling images: `make prune`
+- Remove all images: `make rmi`
+- Full rebuild: `make rebuild`
 
 ## Data persistence
 - WordPress files: volume `webdata` mounted to `/var/www/html`.
