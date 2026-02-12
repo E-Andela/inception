@@ -47,10 +47,14 @@ Create your `.env` in [srcs/.env](srcs/.env) and place secrets in [/.secrets](/.
 ### 2) Build and run
 - Build: `make build`
 - Start: `make up`
+- Restart: `make restart`
 - Logs: `make logs-follow`
 - Stop: `make stop`
 - Remove: `make down`
 - Clean (remove volumes): `make clean`
+- Prune dangling images: `make prune`
+- Remove all images: `make rmi`
+- Full cleanup (containers, images, volumes, networks, secrets): `make nuke`
 
 ### 3) Access
 - Website: `https://<login>.42.fr` (update `/etc/hosts` to map your domain to your local IP)

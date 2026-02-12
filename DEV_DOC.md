@@ -19,7 +19,7 @@ Create [srcs/.env](srcs/.env) with at least:
 - `DB_NAME=wordpress`
 - `DB_USER=<user>`
 - `DB_HOST=mariadb`
-- `WP_ADMIN_USER=<non-admin name>`
+- `WP_ADMIN_USER=<admin name>`
 - `WP_ADMIN_EMAIL=<email>`
 - `WP_USER=<author name>`
 - `WP_USER_EMAIL=<email>`
@@ -36,6 +36,9 @@ Create these files in `.secrets` in the root of the folder:
 - Launch stack: `make up`
 - Rebuild from scratch: `make rebuild`
 
+## Convenience
+- Copy secrets and `.env` into place: `make env` (expects files in `/home/eandela/Documents`)
+
 ## Manage containers & volumes
 - Stop/start: `make stop` / `make start`
 - Restart: `make restart`
@@ -45,6 +48,7 @@ Create these files in `.secrets` in the root of the folder:
 - Prune dangling images: `make prune`
 - Remove all images: `make rmi`
 - Full rebuild: `make rebuild`
+- Full cleanup (containers, images, volumes, networks, secrets): `make nuke`
 
 ## Data persistence
 - WordPress files: volume `webdata` mounted to `/var/www/html`.
@@ -60,6 +64,6 @@ Per subject requirements, these named volumes must live under `/home/<login>/dat
 - **MariaDB**: initializes DB/users on first run and exposes `MARIADB_PORT` to the network.
 
 ## Notes from implementation
-- PHP-FPM listens on `0.0.0.0:${WP_PORT}` (see `www.conf` update in the WordPress Dockerfile).
-- NGINX forwards `.php` requests to `wordpress:${WP_PORT}` on the `webnet` network.
+- PHP-FPM listens on `0.0.0.0:9000` (see `www.conf` update in the WordPress Dockerfile).
+- NGINX forwards `.php` requests to `wordpress:9000` on the `webnet` network.
 - TLS is configured for `TLSv1.2` and `TLSv1.3` only.

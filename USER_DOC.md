@@ -9,9 +9,16 @@ This stack provides:
 ## Start and stop the project
 From the project root:
 - Start: `make up`
+- Restart: `make restart`
 - Stop (without removal): `make stop`
 - Remove containers: `make down`
 - View logs: `make logs-follow`
+
+## Cleanup
+- Remove containers and volumes: `make clean`
+- Prune dangling images: `make prune`
+- Remove all images: `make rmi`
+- Full cleanup (containers, images, volumes, networks, secrets): `make nuke`
 
 ## Access the website and admin panel
 1) Point your domain to your local IP by editing `/etc/hosts`:
