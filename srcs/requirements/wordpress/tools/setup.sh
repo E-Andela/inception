@@ -5,7 +5,7 @@ set -e
 # Wait for MariaDB using a TCP connection test
 TIMEOUT=60
 ELAPSED=0
-while ! bash -c "echo > /dev/tcp/$DB_HOST/${MARIADB_PORT:-3306}" 2>/dev/null; do
+while ! bash -c "echo > /dev/tcp/$DB_HOST/3306" 2>/dev/null; do
   ELAPSED=$((ELAPSED + 1))
   if [ $ELAPSED -gt $TIMEOUT ]; then
     echo "Database connection timeout after ${TIMEOUT}s"
@@ -27,7 +27,7 @@ if [ ! -f /var/www/html/wp-config.php ]; then
 	--dbname=$DB_NAME \
 	--dbuser=$DB_USER \
 	--dbpass=$DB_PASSWORD \
-	--dbhost=$DB_HOST:${MARIADB_PORT:-3306} \
+	--dbhost=$DB_HOST \
 	--allow-root
 
 	wp core install \

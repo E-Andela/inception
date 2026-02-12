@@ -16,7 +16,7 @@ RUN apt-get update && \
 	curl \
 	unzip 
 
-RUN sed -i 's|^listen = .*|listen = 0.0.0.0:${WP_PORT}|' /etc/php/8.2/fpm/pool.d/www.conf
+RUN sed -i 's|^listen = .*|listen = 0.0.0.0:9000|' /etc/php/8.2/fpm/pool.d/www.conf
 RUN mkdir -p /var/www/html
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar \

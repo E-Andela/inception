@@ -10,7 +10,7 @@
 - [srcs/requirements/nginx](srcs/requirements/nginx)
 - [srcs/requirements/wordpress](srcs/requirements/wordpress)
 - [srcs/requirements/mariadb](srcs/requirements/mariadb)
-- Secrets in `../.secrets` (outside the repo root).
+- Secrets in `.secrets`
 
 ## Configuration files
 ### Environment variables
