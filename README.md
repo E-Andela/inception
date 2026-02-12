@@ -63,6 +63,13 @@ Create your `.env` in [srcs/.env](srcs/.env) and place secrets in [/.secrets](/.
 ## Resources
 - Docker Curriculum: https://docker-curriculum.com/
 - Docker Docs: https://docs.docker.com/
+- Docker Compose file reference: https://docs.docker.com/compose/compose-file/
+- Docker Volumes: https://docs.docker.com/storage/volumes/
+- Docker Networks: https://docs.docker.com/network/
+- Docker Secrets: https://docs.docker.com/compose/how-tos/use-secrets/
+- NGINX TLS termination: https://nginx.org/en/docs/http/ngx_http_ssl_module.html
+- WordPress Docker image docs (CLI usage concepts): https://github.com/docker-library/docs/tree/master/wordpress
+- WordPress CLI commands: https://developer.wordpress.org/cli/commands/
 
 **AI usage**
 - Used for drafting documentation structure and wording.
