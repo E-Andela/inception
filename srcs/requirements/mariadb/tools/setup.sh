@@ -14,7 +14,7 @@ MARIADB_PORT=${MARIADB_PORT:-3306}
 
 # Check if database is already initialized
 if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
-  # Fresh install - root has no password yet
+
   mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${DB_ROOT_PASSWORD}';"
   mysql -uroot -e "FLUSH PRIVILEGES;"
   
@@ -27,7 +27,7 @@ fi
 
 # Update bind address and port to allow connections from other containers
 sed -i 's/^bind-address.*/bind-address = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
-sed -i "s/^port.*/port = ${MARIADB_PORT}/" /etc/mysql/mariadb.conf.d/50-server.cnf
+sed -i '/^\[mysqld\]/a port = '${MARIADB_PORT:-3306} /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Stop the temporary service using mysqladmin with credentials
 mysqladmin -uroot -p${DB_ROOT_PASSWORD} shutdown

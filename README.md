@@ -1,139 +1,65 @@
-AI Prompts:
+*This project has been created as part of the 42 curriculum by eandela.*
 
-I want to create an Nginx server in a docker container. I want to start writing my own Dockerfile for this. Where do I begin?
+# Inception
 
-When nginx is running in a container, where should the files be located that it hosts? How do you configure how it runs? Where is the config file?
+## Description
+This project builds a small infrastructure using Docker Compose with three custom-built services: NGINX (TLS-only entrypoint), WordPress with PHP-FPM, and MariaDB. The stack runs on a dedicated Docker network and persists data in two named volumes (database and WordPress files). All images are built from Debian oldstable, and no prebuilt service images are pulled.
 
-I'm only allowed to use the second to last Debian or Alpine version.
-Latest is trixie, second latest is Bookworm
+**Goal:** deliver a secure, reproducible, self-hosted WordPress stack with proper separation of concerns and safe credential handling via environment variables and Docker secrets.
 
-Build with docker build -t my-nginx .
+## Project Overview
+**Services**
+- **NGINX**: TLSv1.2/1.3 termination and reverse proxy to PHP-FPM.
+- **WordPress + PHP-FPM**: application runtime and content management.
+- **MariaDB**: database backend.
 
-Then incorporate a wordpress website step by step.
+**Docker resources**
+- **Network**: `webnet` for inter-container communication.
+- **Volumes**: `webdata` for WordPress files, `dbdata` for MariaDB data.
 
-Add a mariadb database.
+## Design Choices & Sources
+- **Debian oldstable** is used as the base image to comply with the “penultimate stable” requirement.
+- **TLS-only NGINX** is the single entrypoint on port 443; a self-signed certificate is generated during container startup.
+- **WP-CLI** installs and configures WordPress at runtime to avoid volume overwrite issues.
+- **Secrets** are stored in .secrets and mounted into containers to prevent credentials from living in images or source.
 
-Make all three work with docker compose
+## Comparisons (Required)
+### Virtual Machines vs Docker
+- **VMs** virtualize hardware and run a full OS per instance; heavier and slower to boot.
+- **Docker** virtualizes the application layer, shares the host kernel, starts faster, and uses fewer resources.
 
-I have to setup a second container with wordpress and php. Wordpress contents goes in a volume on the host machine. PHP is installed in the container.
+### Secrets vs Environment Variables
+- **Environment variables** are convenient for non-sensitive settings (domain, ports) but are visible via `docker inspect`.
+- **Docker secrets** are mounted as files with stricter permissions and are preferred for passwords/credentials.
 
-I want to create a volume where my website hosted by my nginx server is stored. Without yet thinking about making another container with php and wordpress.
+### Docker Network vs Host Network
+- **Docker network** isolates services and allows container discovery by name; safer and portable.
+- **Host network** removes isolation and risks port conflicts; forbidden by the subject.
 
-How do I get the files from my host machine to the volume?
-$: docker volume create webdata
-$: docker run -d -v webdata:/var/www/html -p 8080:80 --name nginx-vol my-nginx
-then copy files to /var/www/html and it is saved to the volume
+### Docker Volumes vs Bind Mounts
+- **Named volumes** are managed by Docker and are portable; required for this project.
+- **Bind mounts** map host paths directly; more error‑prone and forbidden for persistent data here.
 
-23/01/2026
-Get nginx and wordpress containers working together over a network.
-How does nginx get php requests to the php server?
-How do I set the php server to listen to port 9000?
-listen = /run/php/php8.2-fpm.sock	====> listen = 0.0.0.0:9000 in /etc/php/8.2/fpm/pool.d/www.conf
-How do you set up a docker network?
-docker create network <network name>
-How do you assign a network to a docker container?
-when creating a container add: --network <network name>
+## Instructions
+### 1) Configure environment
+Create your `.env` in [srcs/.env](srcs/.env) and place secrets in `../.secrets` (see DEV_DOC.md for full details).
 
-24/01/2026
-Edit the php config file:
-listen = /run/php/php8.2-fpm.sock	====> listen = 0.0.0.0:9000
-docker create network webnet
-docker run -d -v webdata:/var/www/html --name wordpress --network webnet wordpress
-docker run -d -v webdata:/var/www/html --name nginx --network webnet -p 8080:80 nginx
+### 2) Build and run
+- Build: `make build`
+- Start: `make up`
+- Status: `make ps`
+- Logs: `make logs ARGS='-f <service>'`
+- Stop: `make stop`
+- Remove: `make down`
 
-Get wordpress content in there.
+### 3) Access
+- Website: `https://<login>.42.fr` (update `/etc/hosts` to map your domain to your local IP)
+- WordPress admin: `https://<login>.42.fr/wp-admin`
 
-26/01/2026
-create compose file
-set up database.
-How do I properly configure mariadb?
+## Resources
+- Docker Curriculum: https://docker-curriculum.com/
+- Docker Docs: https://docs.docker.com/
 
-27/01/2026
- $ docker run -it --network webnet --name mariadb -v my_git_dbdata mariadb bash
-service mariadb start
-
-29/01/2026
-to run mariadb we do:
-docker run -it --network webnet --name mariadb -v dbdata mariadb bash
-
-30/01/2026
-added setup.sh to wordpress. Gives ownership to www-data of /var/www/html so we can make wp-config.php
-How do we login via a script?
-And what is this second user?
-What is the admin account and what privileges does the other account need?
-curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-
-02/02/2026
-figure out the steps to install wp-cli
-curl the url -> give execution rights -> move somewhere accesible for $PATH -> download wp files with: wp core download. Don't do this in the dockerfile but in the entrypoint script. Otherwise the volume will overwrite it.
-
-How to get env variables in my container? put env_file: in container.
-For tomorrow:
-Fix connection issue? Just changed nginx.conf
-
-03/02/2026
-Add ssl certificates??
-Put passwords in secrets.
-How to change the domain name?
-Why do we get to store the passwords in .txt files??
-How do I get my containers to restart in case of crash?
-
-How to add ssl certificate:
-add "listen 8443 ssl;" directive to config file.
-add "ssl_certificate ...;" & "ssl_certificate_key ...;" locations
-add "ssl_protocols TLSv1.3;"
-continue with this tomorrow
-
-04/02/2026
-Install openssl
-figure out how to do the url. Need to edit /etc/hosts
-Add passwords to secrets.
-
-Get containers to restart in case of crash. Got iiiiiiit.
-for tomorrow: add secrets to script.
-
-To change between localhost and eandela.42.fr
-nginx.conf
-listen 80; --> listen 433 ssl;
-server_name eandela.42.fr;
-ssl_certificate     /etc/nginx/ssl/nginx.crt;
-ssl_certificate_key /etc/nginx/ssl/nginx.key;
-ssl_protocols       TLSv1.2 TLSv1.3;
-
-wordpress/setup.sh
---url="http://localhost:8080" --> --url="https://eandela.42.fr"
-
-docker-compose.yml
-ports: "8080:80" --> "443:443"
-
-Changed the place the volumes are at, but not quite sure if it is the right way to go about it.
-I created /etc/docker/daemon.json
-{
-  "data-root": "/home/eandela/data"
-}
-
-08/02/2026
-fix folder structure			[x]
-Image names -- remove :local	[x]
-use bookworm or oldstable?		[x]
-remove secrets from logs		[x]
-get domain name from env		[x]
-fix expose mismatch				[x]
-create documentation			[]
-add makefile					[x]
-What the hell is dockerignore?	[x]
-Fix mariadb login password.		[x]
-rm daemon.json					[]
-fix setup.sh mariadb			[]
-be able to change ports!		[]
-
-for tomorrow
-setup.sh can't run a second time because im not login in with root
-
-How do I change portnumbers for services?
-Nginx:
-
-
-References:
-https://docker-curriculum.com/
-https://docs.docker.com/
+**AI usage**
+- Used for drafting documentation structure and wording.
+- Used to summarize Docker concepts (networks, volumes, secrets) and incorporate project notes.
